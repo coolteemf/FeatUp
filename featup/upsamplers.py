@@ -251,12 +251,12 @@ class JBULearnedRange(torch.nn.Module):
 
 class JBUStack(torch.nn.Module):
 
-    def __init__(self, feat_dim, *args, **kwargs):
+    def __init__(self, feat_dim, guidance_dim=3, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.up1 = JBULearnedRange(3, feat_dim, 32, radius=3)
-        self.up2 = JBULearnedRange(3, feat_dim, 32, radius=3)
-        self.up3 = JBULearnedRange(3, feat_dim, 32, radius=3)
-        self.up4 = JBULearnedRange(3, feat_dim, 32, radius=3)
+        self.up1 = JBULearnedRange(guidance_dim, feat_dim, 32, radius=3)
+        self.up2 = JBULearnedRange(guidance_dim, feat_dim, 32, radius=3)
+        self.up3 = JBULearnedRange(guidance_dim, feat_dim, 32, radius=3)
+        self.up4 = JBULearnedRange(guidance_dim, feat_dim, 32, radius=3)
         self.fixup_proj = torch.nn.Sequential(
             torch.nn.Dropout2d(0.2),
             torch.nn.Conv2d(feat_dim, feat_dim, kernel_size=1))
@@ -285,11 +285,11 @@ class Bilinear(torch.nn.Module):
         return F.interpolate(feats, (h, w), mode="bilinear")
 
 
-def get_upsampler(upsampler, dim):
+def get_upsampler(upsampler, dim, guidance_dim):
     if upsampler == 'bilinear':
         return Bilinear()
     elif upsampler == 'jbu_stack':
-        return JBUStack(dim)
+        return JBUStack(dim, guidance_dim)
     elif upsampler == 'resize_conv':
         return LayeredResizeConv(dim, 1)
     elif upsampler == 'carafe':

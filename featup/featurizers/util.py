@@ -2,6 +2,7 @@ import torch
 
 def get_featurizer(name, activation_type="key", **kwargs):
     name = name.lower()
+    guidance_dim = 3
     if name == "vit":
         from .DINO import DINOFeaturizer
         patch_size = 16
@@ -63,6 +64,12 @@ def get_featurizer(name, activation_type="key", **kwargs):
         model = DeepLabV3Featurizer(model)
         patch_size = 1
         dim = 2048
+    elif name == "deepraynet":
+        from DeepPhysX_X3D.scratch_impl import DeepRayNetFeaturizer
+        model = DeepRayNetFeaturizer()
+        patch_size = 1
+        dim = 768
+        guidance_dim = 1
     else:
         raise ValueError("unknown model: {}".format(name))
-    return model, patch_size, dim
+    return model, patch_size, dim, guidance_dim

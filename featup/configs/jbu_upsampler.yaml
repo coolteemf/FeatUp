@@ -1,17 +1,17 @@
 # Environment Args
 output_root: '../../'
-pytorch_data_dir: '/pytorch-data'
+pytorch_data_dir: '/home/francois/Projects/data/training'
 submitting_to_aml: false
 
 # Dataset args
-dataset: "cocostuff"
+dataset: "cube_checkerhalf"
 
 # Model Args
-model_type: "vit"
-activation_type: "token"
+model_type: "deepraynet"
+activation_type: "token" # no effect for resnets
 
 # Upsampling args
-outlier_detection: True
+outlier_detection: True # Wether to use an uncertainty weighed MSE loss
 upsampler_type: "jbu_stack"
 downsampler_type: "attention"
 max_pad: 20

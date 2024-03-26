@@ -76,11 +76,11 @@ class JBUFeatUp(pl.LightningModule):
         self.tv_weight = tv_weight
         self.chkpt_dir = chkpt_dir
 
-        self.model, self.patch_size, self.dim = get_featurizer(model_type, activation_type, num_classes=1000)
+        self.model, self.patch_size, self.dim, self.guidance_dim = get_featurizer(model_type, activation_type, num_classes=1000)
         for p in self.model.parameters():
             p.requires_grad = False
         self.model = torch.nn.Sequential(self.model, ChannelNorm(self.dim))
-        self.upsampler = get_upsampler(upsampler, self.dim)
+        self.upsampler = get_upsampler(upsampler, self.dim, self.guidance_dim)
 
         if downsampler == 'simple':
             self.downsampler = SimpleDownsampler(self.kernel_size, self.final_size)
