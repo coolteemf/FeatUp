@@ -241,7 +241,7 @@ def load_some_hr_feats(model_type,
         return big_batch
 
     with torch.no_grad():
-        model, _, dim, _ = get_featurizer(model_type, activation_type)
+        model, _, dim = get_featurizer(model_type, activation_type)
         model = torch.nn.Sequential(model, ChannelNorm(dim))
         model = model.cuda()
         batch = get_data(model, HighResEmb(split=split, **shared_args))

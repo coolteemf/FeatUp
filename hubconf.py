@@ -12,7 +12,7 @@ class UpsampledBackbone(Module):
 
     def __init__(self, model_name, use_norm):
         super().__init__()
-        model, patch_size, self.dim, _ = get_featurizer(model_name, "token", num_classes=1000)
+        model, patch_size, self.dim = get_featurizer(model_name, "token", num_classes=1000)
         if use_norm:
             self.model = torch.nn.Sequential(model, ChannelNorm(self.dim))
         else:

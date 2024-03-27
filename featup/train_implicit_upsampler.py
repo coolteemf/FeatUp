@@ -112,7 +112,7 @@ def my_app(cfg: DictConfig) -> None:
     feat_dir = join(cfg.output_root, "feats", cfg.experiment_name, cfg.dataset, cfg.split, cfg.model_type)
     log_dir = join(cfg.output_root, "logs", cfg.experiment_name, cfg.dataset, cfg.split, cfg.model_type)
 
-    model, _, dim, _ = get_featurizer(cfg.model_type, activation_type=cfg.activation_type, output_root=cfg.output_root)
+    model, _, dim = get_featurizer(cfg.model_type, activation_type=cfg.activation_type, output_root=cfg.output_root)
 
     if cfg.use_norm:
         model = torch.nn.Sequential(model, ChannelNorm(dim))
