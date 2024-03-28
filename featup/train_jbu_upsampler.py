@@ -76,7 +76,12 @@ class JBUFeatUp(pl.LightningModule):
         self.tv_weight = tv_weight
         self.chkpt_dir = chkpt_dir
 
-        self.model, self.patch_size, self.dim, self.guidance_dim = get_featurizer(model_type, activation_type, num_classes=1000)
+        self.model, self.patch_size, self.dim = get_featurizer(model_type, activation_type, num_classes=1000)
+        # guidance_dim = number of channels in the guidance image
+        if self.model._get_name() == 'DeepRayNetFeaturizer':
+            self.guidance_dim = 1
+        else:
+            self.guidance_dim = 3
         for p in self.model.parameters():
             p.requires_grad = False
         self.model = torch.nn.Sequential(self.model, ChannelNorm(self.dim))

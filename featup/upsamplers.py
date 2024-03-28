@@ -285,7 +285,7 @@ class Bilinear(torch.nn.Module):
         return F.interpolate(feats, (h, w), mode="bilinear")
 
 
-def get_upsampler(upsampler, dim, guidance_dim):
+def get_upsampler(upsampler, dim, guidance_dim=3):
     if upsampler == 'bilinear':
         return Bilinear()
     elif upsampler == 'jbu_stack':
