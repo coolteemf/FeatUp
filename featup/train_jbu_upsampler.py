@@ -199,7 +199,7 @@ class JBUFeatUp(pl.LightningModule):
         self.avg.add("loss/rec", full_rec_loss)
         self.avg.add("loss/total", full_total_loss)
 
-        if self.global_step % 100 == 0:
+        if self.global_step % 500 == 0:
             self.trainer.save_checkpoint(self.chkpt_dir[:-5] + '/' + self.chkpt_dir[:-5] + f'_{self.global_step}.ckpt')
 
         self.avg.logall(self.log)
