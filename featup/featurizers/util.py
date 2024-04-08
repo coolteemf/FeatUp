@@ -63,9 +63,14 @@ def get_featurizer(name, activation_type="key", **kwargs):
         model = DeepLabV3Featurizer(model)
         patch_size = 1
         dim = 2048
-    elif name == "deepraynet":
+    elif name[:len("deepraynet")] == "deepraynet":
         from DeepPhysX_X3D.scratch_impl import DeepRayNetFeaturizer
-        model = DeepRayNetFeaturizer()
+        net_id = name[len("deepraynet"):]
+        if len(net_id) != 11 :
+            if len(net_id) != 0:
+                print(f"Warning: net_id {net_id} not recongized, using default.")
+            net_id = None
+        model = DeepRayNetFeaturizer(net_id=net_id)
         patch_size = 1
         dim = 768
     else:

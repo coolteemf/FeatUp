@@ -1,13 +1,13 @@
 # Environment Args
-output_root: '../../'
+output_root: '/home/francois/Projects/data/sessions'
 pytorch_data_dir: '/home/francois/Projects/data/training'
 submitting_to_aml: false
 
 # Dataset args
-dataset: "cube_checkerhalf"
+dataset: "cube_checker"
 
 # Model Args
-model_type: "deepraynet"
+model_type: "deepraynet0301-1248_2"
 activation_type: "token" # no effect for resnets
 
 # Upsampling args
